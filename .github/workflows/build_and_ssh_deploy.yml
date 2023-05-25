@@ -13,5 +13,5 @@ jobs:
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
-          password: ${{ secrets.DEPLOY_SECRET }}
+          key: ${{ secrets.DEPLOY_SECRET }}
           script: cd ~/github-actions-test && git pull && bash run.sh
