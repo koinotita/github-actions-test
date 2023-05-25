@@ -126,3 +126,6 @@ systemctl status $serviceName
 git config --global http.sslVerify false
 git config --global http.postBuffer 1048576000
 ```
+
+branches v2 测试虚拟机构建，构建物推送到目标服务器，然后重启服务，测试完成
+branches v1 测试目标服务器构建并重启服务，测试完成
