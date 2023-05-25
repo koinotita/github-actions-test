@@ -21,6 +21,15 @@ jobs:
       - name: Build
         run: go build main.go
 
+
+      - name: Stop Service And Remove.
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SECRET }}
+          script: cd ~/github-actions-test && sudo systemctl stop github-actions-test && rm main -f
+
       - name: PushToTarget
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -30,6 +39,14 @@ jobs:
           port: 22
           source: main
           target: /home/ubuntu/github-actions-test
+
+      - name: Start Service
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SECRET }}
+          script: sudo systemctl start github-actions-test
 
 #      - name: Deploy
 #        env:
