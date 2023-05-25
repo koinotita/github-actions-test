@@ -7,7 +7,7 @@ systemctl stop $serviceName
 rm main -f
 
 # 重新编译
-export PATH=$PATH:/usr/local/go/bin
+#export PATH=$PATH:/usr/local/go/bin
 go mod tidy
 go build main.go
 

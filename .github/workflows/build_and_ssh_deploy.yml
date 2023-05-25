@@ -1,0 +1,17 @@
+name: BuildAndPushTo
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: 直接在服务器执行命令
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          password: ${{ secrets.DEPLOY_SECRET }}
+          script: cd ~/github-actions-test && git pull && bash run.sh
