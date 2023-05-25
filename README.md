@@ -117,4 +117,12 @@ go build main.go
 # 启动服务
 systemctl start $serviceName
 systemctl status $serviceName
+
+```
+
+更新git代码报错，需要设置
+```text
+## apt-get install gnutls-bin
+git config --global http.sslVerify false
+git config --global http.postBuffer 1048576000
 ```

@@ -3,7 +3,7 @@
 serviceName="github-actions-test"
 
 # 停止服务
-systemctl stop $serviceName
+sudo systemctl stop $serviceName
 rm main -f
 
 # 重新编译
@@ -12,5 +12,5 @@ go mod tidy
 go build main.go
 
 # 启动服务
-systemctl start $serviceName
-systemctl status $serviceName
+sudo systemctl start $serviceName
+sudo systemctl status $serviceName
