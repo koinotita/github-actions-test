@@ -1,0 +1,51 @@
+name: Build
+on:
+  push:
+    branches:
+      - v2
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Golang
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.19'
+          cache: true
+
+
+      - name: Build
+        run: go build main.go
+
+      - name: PushToTarget
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SECRET }}
+          port: 22
+          source: main
+          target: /home/ubuntu/github-actions-test
+
+#      - name: Deploy
+#        env:
+#          SSH_USERNAME: ${{ secrets.DEPLOY_USER }}
+#          SSH_PASSWORD: ${{ secrets.DEPLOY_SECRET }}
+#          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+#
+#          SSH_PORT: 22
+#          DEPLOY_PATH: '/home/ubuntu/github-actions-test'
+#
+#        run: |
+#          # Stop the service
+#          sshpass -p $SSH_PASSWORD ssh -o StrictHostKeyChecking=no $SSH_USERNAME@$DEPLOY_HOST -p $SSH_PORT "sudo systemctl stop github-actions-test && rm -rf $DEPLOY_PATH/main"
+#
+#          # Copy the binary to the remote server
+#          sshpass -p $SSH_PASSWORD scp -r -o StrictHostKeyChecking=no -P 47 main root@www.nickxu.top:/root/github-actions-test
+#
+#          # Restart the service on the remote server
+#          sshpass -p $SSH_PASSWORD ssh -o StrictHostKeyChecking=no $SSH_USERNAME@$DEPLOY_HOST -p $SSH_PORT "sudo systemctl start github-actions-test"

@@ -10,9 +10,9 @@ func main() {
 	r := gin.Default()
 
 	r.GET("/", func(c *gin.Context) {
-		c.String(200, "Hello World, I'm a Gin server v3 with auto push.")
+		c.String(200, "Hello World, I'm a Gin server v4 with auto push.")
 	})
-	fmt.Println("v3 push.")
+	fmt.Println("v4 push.")
 
 	r.Run(":8080")
 }
